@@ -1,5 +1,30 @@
 package com.wizardtdshooter.view;
 
+import com.wizardtdshooter.controller.BufferedImageLoader;
+import com.wizardtdshooter.controller.Handler;
+import com.wizardtdshooter.controller.KeyInput;
+import com.wizardtdshooter.controller.MouseInput;
+import com.wizardtdshooter.controller.SpriteSheet;
+import com.wizardtdshooter.model.Block;
+import com.wizardtdshooter.model.Crate;
+// import com.wizardtdshooter.model.Door;
+import com.wizardtdshooter.model.Enemy;
+import com.wizardtdshooter.model.Grass;
+import com.wizardtdshooter.model.Ground2;
+import com.wizardtdshooter.model.ID;
+import com.wizardtdshooter.model.Water;
+import com.wizardtdshooter.model.Wizard;
+import com.wizardtdshooter.model.Wall2;
+import com.wizardtdshooter.model.Wall;
+import com.wizardtdshooter.model.Wood;
+import com.wizardtdshooter.model.Dow;
+import com.wizardtdshooter.model.Roof;
+import com.wizardtdshooter.model.DarkR;
+import com.wizardtdshooter.model.DarkerR;
+
+
+
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -8,21 +33,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
-import com.wizardtdshooter.controller.BufferedImageLoader;
-import com.wizardtdshooter.controller.Handler;
-import com.wizardtdshooter.controller.KeyInput;
-import com.wizardtdshooter.controller.MouseInput;
-import com.wizardtdshooter.controller.SpriteSheet;
-import com.wizardtdshooter.model.Block;
-import com.wizardtdshooter.model.Crate;
-import com.wizardtdshooter.model.Enemy;
-import com.wizardtdshooter.model.Door;
-import com.wizardtdshooter.model.ID;
-import com.wizardtdshooter.model.Wizard;
 
 public class Game extends JPanel implements ActionListener {
 
@@ -42,8 +54,8 @@ public class Game extends JPanel implements ActionListener {
 		camera = new Camera();
 
 		BufferedImageLoader loader = new BufferedImageLoader();
-		this.level = loader.loadImage("/wizard_level.png");
-		this.sprite_sheet = loader.loadImage("/wizard_images.png");
+		this.level = loader.loadImage("/left-bottom.png");
+		this.sprite_sheet = loader.loadImage("/wizard-images.png");
 		this.ss = new SpriteSheet(sprite_sheet);
 		this.floor = ss.grabImage(4, 2, 32, 32);
 		loadLevel(level);
@@ -151,6 +163,40 @@ public class Game extends JPanel implements ActionListener {
 				if (blue == 255 && green == 255 && red == 255) {
 					handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
 				}
+				if (red == 255 && green == 255 && blue == 0) {
+					handler.addObject(new Grass(xx * 32, yy * 32, ID.Grass, ss));
+				}
+				if (red == 50 && green == 50 && blue == 50) {
+					handler.addObject(new Ground2(xx * 32, yy * 32, ID.Ground2, ss));
+				}
+				if (red == 255 && green == 0 && blue == 255) {
+					handler.addObject(new Water(xx * 32, yy * 32, ID.Water, ss));
+				}
+				if (red == 0 && green == 255 && blue == 0) {
+					handler.addObject(new Ground2(xx * 32, yy * 32, ID.Ground2, ss));
+				}
+				if (red == 0 && green == 0 && blue == 0) {
+					handler.addObject(new Wall2(xx * 32, yy * 32, ID.Wall2, ss));
+				}
+				if (red == 0 && green == 0 && blue == 255) {
+					handler.addObject(new Wall(xx * 32, yy * 32, ID.Wall, ss));
+				}
+				if (red == 255 && green == 100 && blue == 100) {
+					handler.addObject(new Wood(xx * 32, yy * 32, ID.Wood, ss));
+				}
+				if (red == 0 && green == 255 && blue == 255) {
+					handler.addObject(new Dow(xx * 32, yy * 32, ID.Dow, ss));
+				}
+				if (red == 0 && green == 150 && blue == 250) {
+					handler.addObject(new Roof(xx * 32, yy * 32, ID.Roof, ss));
+				}
+				if (red == 50 && green == 50 && blue == 250) {
+					handler.addObject(new DarkR(xx * 32, yy * 32, ID.DarkR, ss));
+				}
+				if (red == 40 && green == 40 && blue == 120) {
+					handler.addObject(new DarkerR(xx * 32, yy * 32, ID.DarkerR, ss));
+				}
+				
 			}
 		}
 	}

@@ -1,11 +1,11 @@
 package com.wizardtdshooter.model;
 
+import com.wizardtdshooter.controller.Handler;
+import com.wizardtdshooter.controller.SpriteSheet;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import com.wizardtdshooter.controller.Handler;
-import com.wizardtdshooter.controller.SpriteSheet;
+import java.util.Random;
 
 public class Enemy extends GameObject {
 
@@ -21,7 +21,9 @@ public class Enemy extends GameObject {
 		this.hp = 100;
 		this.handler = handler;
 		this.isMoving = false;
-		this.enemy_image = ss.grabImage(4, 1, 32, 32);
+		Random rand = new Random();
+		int ind = rand.nextInt(4, 7);
+		this.enemy_image = ss.grabImage(ind, 1, 32, 32);
 	}
 
 	@Override

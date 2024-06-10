@@ -6,5 +6,15 @@ public enum ID {
 	Crate(),
 	Bullet(),
 	Enemy(),
-	Door();
+	Door(),
+	Grass(),
+	Ground2(),
+	Water(),
+	Wall(),
+	Wall2(),
+	Wood(),
+	Dow(),
+	Roof(),
+	DarkR(),
+	DarkerR();
 }
