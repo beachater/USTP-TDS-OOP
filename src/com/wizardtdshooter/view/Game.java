@@ -7,24 +7,19 @@ import com.wizardtdshooter.controller.MouseInput;
 import com.wizardtdshooter.controller.SpriteSheet;
 import com.wizardtdshooter.model.Block;
 import com.wizardtdshooter.model.Crate;
-// import com.wizardtdshooter.model.Door;
+import com.wizardtdshooter.model.DarkR;
+import com.wizardtdshooter.model.DarkerR;
+import com.wizardtdshooter.model.Dow;
 import com.wizardtdshooter.model.Enemy;
 import com.wizardtdshooter.model.Grass;
 import com.wizardtdshooter.model.Ground2;
 import com.wizardtdshooter.model.ID;
+import com.wizardtdshooter.model.Roof;
+import com.wizardtdshooter.model.Wall;
+import com.wizardtdshooter.model.Wall2;
 import com.wizardtdshooter.model.Water;
 import com.wizardtdshooter.model.Wizard;
-import com.wizardtdshooter.model.Wall2;
-import com.wizardtdshooter.model.Wall;
 import com.wizardtdshooter.model.Wood;
-import com.wizardtdshooter.model.Dow;
-import com.wizardtdshooter.model.Roof;
-import com.wizardtdshooter.model.DarkR;
-import com.wizardtdshooter.model.DarkerR;
-
-
-
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -108,32 +103,49 @@ public class Game extends JPanel implements ActionListener {
 	public void paint(Graphics g) {
 		osSupport();
 		Graphics2D g2 = (Graphics2D) g;
-		////////////////////////////////
+	
 		g2.translate(-camera.getX(), -camera.getY());
-
+	
+		// Draw the floor
 		for (int xx = 0; xx < 30 * 72; xx += 32) {
 			for (int yy = 0; yy < 30 * 72; yy += 32) {
 				g.drawImage(this.floor, xx, yy, null);
 			}
 		}
-		handler.render(g);
+	
+		// Draw blocks first
+		for (int i = 0; i < handler.object.size(); i++) {
+			if (handler.object.get(i).getId() != ID.Player || handler.object.get(i).getId() != ID.Enemy || handler.object.get(i).getId() != ID.Crate) {
+				handler.object.get(i).render(g);
+			}
+		}
+	
+		// Draw other objects (player, enemies, crates, etc.)
+		for (int i = 0; i < handler.object.size(); i++) {
+			if (handler.object.get(i).getId() == ID.Player || handler.object.get(i).getId() == ID.Enemy || handler.object.get(i).getId() == ID.Crate) {
+				handler.object.get(i).render(g);
+			}
+		}
+	
 		g2.translate(camera.getX(), camera.getY());
-
+	
+		// HUD rendering
 		g.setColor(Color.red.darker());
 		g.fillRect(20, 20, 200, 25);
 		g.setColor(Color.green.darker());
 		g.fillRect(20, 20, Window.hp * 4, 25);
 		g.setColor(Color.white);
 		g.setFont(new Font("Arial", 0, 14));
-
+	
 		int ammo = Window.ammo % 16;
 		int onHand = Window.ammo / 16;
 		g.drawString("" + onHand, 105, 60);
 		g.setFont(new Font("Arial", 0, 16));
 		g.drawString("Ammo:  " + ammo, 20, 60);
-		////////////////////////////////
+	
 		g.dispose();
 	}
+	
 
 	// Loading the level
 	private void loadLevel(BufferedImage image) {
@@ -148,7 +160,7 @@ public class Game extends JPanel implements ActionListener {
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
 
-				if (red == 255 && blue != 255 && green != 255) {
+				if (red == 255 && blue == 0 && green == 0) {
 					handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss));
 				}
 				if (green == 255 && blue != 255 && red != 255) {
@@ -160,9 +172,9 @@ public class Game extends JPanel implements ActionListener {
 				if (blue == 255 && green == 255 && red != 255) {
 					handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));
 				}
-				if (blue == 255 && green == 255 && red == 255) {
-					handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
-				}
+				// if (blue == 255 && green == 255 && red == 255) {
+				// 	handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
+				// }
 				if (red == 255 && green == 255 && blue == 0) {
 					handler.addObject(new Grass(xx * 32, yy * 32, ID.Grass, ss));
 				}
