@@ -45,7 +45,7 @@ public class Game extends JPanel implements ActionListener {
 	private BufferedImage floor = null;
 	private Camera camera;
 	public static int currentLevel = 0;
-	private String[] levels = {"/left-bottom.png", "/top_left.png", "/top_right.png", "/bottom_right.png"};
+	private String[] levels = {"/bottom left.png", "/top_left.png", "/top_right.png", "/bottom right.png"};
 
 
 	public Game() {
