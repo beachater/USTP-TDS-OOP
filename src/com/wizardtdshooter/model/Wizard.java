@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 
 import com.wizardtdshooter.controller.Handler;
 import com.wizardtdshooter.controller.SpriteSheet;
+import com.wizardtdshooter.view.Game;
 import com.wizardtdshooter.view.Window;
 
 public class Wizard extends GameObject {
@@ -60,11 +61,11 @@ public class Wizard extends GameObject {
 				}
 			}
 			if (tempObject.getId() == ID.Door) {
-				if (this.getBounds().intersects(tempObject.getBounds())) {
-					JOptionPane.showMessageDialog(null, "Congragulations, you won!");
-					System.exit(0);
-				}
-			}
+                if (this.getBounds().intersects(tempObject.getBounds())) {
+                    // Call the loadNextLevel method in the Game class
+                    ((Game) handler.getGame()).loadNextLevel();
+                }
+            }
 		}
 	}
 

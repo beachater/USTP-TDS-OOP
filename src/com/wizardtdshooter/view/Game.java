@@ -9,8 +9,10 @@ import com.wizardtdshooter.model.Block;
 import com.wizardtdshooter.model.Crate;
 import com.wizardtdshooter.model.DarkR;
 import com.wizardtdshooter.model.DarkerR;
+import com.wizardtdshooter.model.Door;
 import com.wizardtdshooter.model.Dow;
 import com.wizardtdshooter.model.Enemy;
+import com.wizardtdshooter.model.GameObject;
 import com.wizardtdshooter.model.Grass;
 import com.wizardtdshooter.model.Ground2;
 import com.wizardtdshooter.model.ID;
@@ -42,25 +44,34 @@ public class Game extends JPanel implements ActionListener {
 	private BufferedImage sprite_sheet = null;
 	private BufferedImage floor = null;
 	private Camera camera;
+	public static int currentLevel = 0;
+	private String[] levels = {"/left-bottom.png", "/top_left.png", "/top_right.png", "/bottom_right.png"};
+
 
 	public Game() {
 		////////////////////////
-		handler = new Handler();
+
+		handler = new Handler(this);
 		camera = new Camera();
 
 		BufferedImageLoader loader = new BufferedImageLoader();
-		this.level = loader.loadImage("/left-bottom.png");
 		this.sprite_sheet = loader.loadImage("/wizard-images.png");
 		this.ss = new SpriteSheet(sprite_sheet);
 		this.floor = ss.grabImage(4, 2, 32, 32);
-		loadLevel(level);
+		loadLevel(levels[currentLevel]);
 		/////////////////////////
 		this.setFocusable(true);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(new KeyInput(handler));
 		this.addMouseListener(new MouseInput(handler, camera, ss));
 		this.start();
-	}
+	}	
+	public void loadNextLevel() {
+        if (currentLevel < levels.length - 1) {
+            currentLevel++;
+            loadLevel(levels[currentLevel]);
+        }
+    }	
 
 	private void start() {
 		isRunning = true;
@@ -83,22 +94,24 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	public void tick() {
-		int enemy = 0;
-		// Update Camera
-		for (int i = 0; i < handler.object.size(); i++) {
-			if (handler.object.get(i).getId() == ID.Player) {
-				camera.tick(handler.object.get(i));
-			}
-			if (handler.object.get(i).getId() == ID.Enemy) {
-				enemy++;
-			}
-		}
-		handler.tick();
-		if (enemy <= 0) {
-			this.isRunning = false;
-		}
-		enemy = 0;
-	}
+    int enemy = 0;
+    for (int i = 0; i < handler.object.size(); i++) {
+        GameObject obj = handler.object.get(i);
+        if (obj.getId() == ID.Player) {
+            camera.tick(obj);
+            System.out.println("Updating camera for player at position: " + obj.getX() + ", " + obj.getY());
+        }
+        if (obj.getId() == ID.Enemy) {
+            enemy++;
+            System.out.println("Enemy found at position: " + obj.getX() + ", " + obj.getY());
+        }
+    }
+    handler.tick();
+    if (enemy <= 0) {
+        this.isRunning = false;
+        System.out.println("No enemies left, stopping game.");
+    }
+}
 
 	public void paint(Graphics g) {
 		osSupport();
@@ -148,14 +161,19 @@ public class Game extends JPanel implements ActionListener {
 	
 
 	// Loading the level
-	private void loadLevel(BufferedImage image) {
+	private void loadLevel(String path) {
+		BufferedImageLoader loader = new BufferedImageLoader();
+		BufferedImage image = loader.loadImage(path);
+		
 		int w = image.getWidth();
 		int h = image.getHeight();
-
+	
+		handler.clearObjects();  // Clear existing objects before loading new level
+	
 		for (int xx = 0; xx < w; xx++) {
 			for (int yy = 0; yy < h; yy++) {
 				int pixel = image.getRGB(xx, yy);
-
+	
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
@@ -172,9 +190,9 @@ public class Game extends JPanel implements ActionListener {
 				if (blue == 255 && green == 255 && red != 255) {
 					handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));
 				}
-				// if (blue == 255 && green == 255 && red == 255) {
-				// 	handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
-				// }
+				if (blue == 255 && green == 255 && red == 255) {
+					handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
+				}
 				if (red == 255 && green == 255 && blue == 0) {
 					handler.addObject(new Grass(xx * 32, yy * 32, ID.Grass, ss));
 				}
