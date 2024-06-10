@@ -45,7 +45,7 @@ public class Game extends JPanel implements ActionListener {
 	private BufferedImage floor = null;
 	private Camera camera;
 	public static int currentLevel = 0;
-	private String[] levels = {"/bottom left.png", "/top_left.png", "/top_right.png", "/bottom right.png"};
+	private String[] levels = {"/bottom-left.png", "/top_left.png", "/top_right.png", "/bottom-right.png"};
 
 
 	public Game() {
@@ -55,7 +55,7 @@ public class Game extends JPanel implements ActionListener {
 		camera = new Camera();
 
 		BufferedImageLoader loader = new BufferedImageLoader();
-		this.sprite_sheet = loader.loadImage("/wizard-images.png");
+		this.sprite_sheet = loader.loadImage("/wizard_images_2.png");
 		this.ss = new SpriteSheet(sprite_sheet);
 		this.floor = ss.grabImage(4, 2, 32, 32);
 		loadLevel(levels[currentLevel]);
@@ -128,14 +128,14 @@ public class Game extends JPanel implements ActionListener {
 	
 		// Draw blocks first
 		for (int i = 0; i < handler.object.size(); i++) {
-			if (handler.object.get(i).getId() != ID.Player || handler.object.get(i).getId() != ID.Enemy || handler.object.get(i).getId() != ID.Crate) {
+			if (handler.object.get(i).getId() != ID.Player || handler.object.get(i).getId() != ID.Enemy || handler.object.get(i).getId() != ID.Crate|| handler.object.get(i).getId() != ID.Door) {
 				handler.object.get(i).render(g);
 			}
 		}
 	
 		// Draw other objects (player, enemies, crates, etc.)
 		for (int i = 0; i < handler.object.size(); i++) {
-			if (handler.object.get(i).getId() == ID.Player || handler.object.get(i).getId() == ID.Enemy || handler.object.get(i).getId() == ID.Crate) {
+			if (handler.object.get(i).getId() == ID.Player || handler.object.get(i).getId() == ID.Enemy || handler.object.get(i).getId() == ID.Crate || handler.object.get(i).getId() == ID.Door ){
 				handler.object.get(i).render(g);
 			}
 		}
@@ -190,7 +190,7 @@ public class Game extends JPanel implements ActionListener {
 				if (blue == 255 && green == 255 && red != 255) {
 					handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));
 				}
-				if (blue == 255 && green == 255 && red == 255) {
+				if (blue == 100 && green == 0 && red == 100) {
 					handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
 				}
 				if (red == 255 && green == 255 && blue == 0) {

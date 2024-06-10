@@ -1,10 +1,9 @@
 package com.wizardtdshooter.model;
 
+import com.wizardtdshooter.controller.SpriteSheet;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-
-import com.wizardtdshooter.controller.SpriteSheet;
 
 public class Block extends GameObject {
 
