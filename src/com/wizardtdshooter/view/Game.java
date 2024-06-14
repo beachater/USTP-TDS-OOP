@@ -8,18 +8,19 @@ import com.wizardtdshooter.controller.SpriteSheet;
 import com.wizardtdshooter.model.Block;
 import com.wizardtdshooter.model.Crate;
 import com.wizardtdshooter.model.DarkR;
+import com.wizardtdshooter.model.DarkW;
 import com.wizardtdshooter.model.DarkerR;
 import com.wizardtdshooter.model.Door;
 import com.wizardtdshooter.model.Dow;
 import com.wizardtdshooter.model.Enemy;
 import com.wizardtdshooter.model.GameObject;
 import com.wizardtdshooter.model.Grass;
-import com.wizardtdshooter.model.Ground2;
 import com.wizardtdshooter.model.ID;
 import com.wizardtdshooter.model.Roof;
 import com.wizardtdshooter.model.Wall;
 import com.wizardtdshooter.model.Wall2;
 import com.wizardtdshooter.model.Water;
+import com.wizardtdshooter.model.WhiteWall;
 import com.wizardtdshooter.model.Wizard;
 import com.wizardtdshooter.model.Wood;
 import java.awt.Color;
@@ -94,24 +95,24 @@ public class Game extends JPanel implements ActionListener {
 	}
 
 	public void tick() {
-    int enemy = 0;
-    for (int i = 0; i < handler.object.size(); i++) {
-        GameObject obj = handler.object.get(i);
-        if (obj.getId() == ID.Player) {
-            camera.tick(obj);
-            System.out.println("Updating camera for player at position: " + obj.getX() + ", " + obj.getY());
-        }
-        if (obj.getId() == ID.Enemy) {
-            enemy++;
-            System.out.println("Enemy found at position: " + obj.getX() + ", " + obj.getY());
-        }
-    }
-    handler.tick();
-    if (enemy <= 0) {
-        this.isRunning = false;
-        System.out.println("No enemies left, stopping game.");
-    }
-}
+		int enemy = 0;
+		for (int i = 0; i < handler.object.size(); i++) {
+			GameObject obj = handler.object.get(i);
+			if (obj.getId() == ID.Player) {
+				camera.tick(obj);
+
+			}
+			if (obj.getId() == ID.Enemy) {
+				enemy++;
+		
+			}
+		}
+		handler.tick();
+		if (enemy <= 0) {
+			this.isRunning = false;
+			System.out.println("No enemies left, stopping game.");
+		}
+	}
 
 	public void paint(Graphics g) {
 		osSupport();
@@ -128,7 +129,7 @@ public class Game extends JPanel implements ActionListener {
 	
 		// Draw blocks first
 		for (int i = 0; i < handler.object.size(); i++) {
-			if (handler.object.get(i).getId() != ID.Player || handler.object.get(i).getId() != ID.Enemy || handler.object.get(i).getId() != ID.Crate|| handler.object.get(i).getId() != ID.Door) {
+			if (handler.object.get(i).getId() != ID.Player || handler.object.get(i).getId() != ID.Enemy || handler.object.get(i).getId() != ID.Crate|| handler.object.get(i).getId() != ID.Door ) {
 				handler.object.get(i).render(g);
 			}
 		}
@@ -158,7 +159,15 @@ public class Game extends JPanel implements ActionListener {
 	
 		g.dispose();
 	}
-	
+	// private void replaceEnemiesWithWall2() {
+	// 	for (int i = 0; i < handler.object.size(); i++) {
+	// 		GameObject obj = handler.object.get(i);
+	// 		if (obj.getId() == ID.Enemy) {
+	// 			handler.addObject(new Wall2(obj.getX(), obj.getY(), ID.Wall2, ss));
+	// 			i--;  // Adjust index after removal
+	// 		}
+	// 	}
+	// }
 
 	// Loading the level
 	private void loadLevel(String path) {
@@ -178,35 +187,31 @@ public class Game extends JPanel implements ActionListener {
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
 
+				
+				if (red != 255 && green != 255 && blue == 255) {
+					handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, ss));
+				}
 				if (red == 255 && blue == 0 && green == 0) {
 					handler.addObject(new Block(xx * 32, yy * 32, ID.Block, ss));
 				}
-				if (green == 255 && blue != 255 && red != 255) {
+				if (green == 255 && blue == 0 && red == 0) {
 					handler.addObject(new Enemy(xx * 32, yy * 32, ID.Enemy, handler, ss));
 				}
-				if (blue == 255 && green != 255 && red != 255) {
-					handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, ss));
-				}
-				if (blue == 255 && green == 255 && red != 255) {
+				if (blue == 255 && green == 255 && red == 0) {
 					handler.addObject(new Crate(xx * 32, yy * 32, ID.Crate, ss));
-				}
+				}	
 				if (blue == 100 && green == 0 && red == 100) {
 					handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
 				}
-				if (red == 255 && green == 255 && blue == 0) {
+				if (red == 255 && green == 0 && blue == 255) {
 					handler.addObject(new Grass(xx * 32, yy * 32, ID.Grass, ss));
 				}
-				if (red == 50 && green == 50 && blue == 50) {
-					handler.addObject(new Ground2(xx * 32, yy * 32, ID.Ground2, ss));
-				}
+				// if (red == 50 && green == 50 && blue == 50) {
+				// 	handler.addObject(new Ground2(xx * 32, yy * 32, ID.Ground2, ss))
+				// 	System.out.println("Attempting to add Ground2 at: " + xx + ", " + yy");;
+				// }
 				if (red == 255 && green == 0 && blue == 255) {
 					handler.addObject(new Water(xx * 32, yy * 32, ID.Water, ss));
-				}
-				if (red == 0 && green == 255 && blue == 0) {
-					handler.addObject(new Ground2(xx * 32, yy * 32, ID.Ground2, ss));
-				}
-				if (red == 0 && green == 0 && blue == 0) {
-					handler.addObject(new Wall2(xx * 32, yy * 32, ID.Wall2, ss));
 				}
 				if (red == 0 && green == 0 && blue == 255) {
 					handler.addObject(new Wall(xx * 32, yy * 32, ID.Wall, ss));
@@ -214,7 +219,7 @@ public class Game extends JPanel implements ActionListener {
 				if (red == 255 && green == 100 && blue == 100) {
 					handler.addObject(new Wood(xx * 32, yy * 32, ID.Wood, ss));
 				}
-				if (red == 0 && green == 255 && blue == 255) {
+				if (red == 255 && green == 150 && blue == 250) {
 					handler.addObject(new Dow(xx * 32, yy * 32, ID.Dow, ss));
 				}
 				if (red == 0 && green == 150 && blue == 250) {
@@ -226,6 +231,16 @@ public class Game extends JPanel implements ActionListener {
 				if (red == 40 && green == 40 && blue == 120) {
 					handler.addObject(new DarkerR(xx * 32, yy * 32, ID.DarkerR, ss));
 				}
+				if (red == 255 && green == 255 && blue == 255) {
+					handler.addObject(new WhiteWall(xx * 32, yy * 32, ID.WhiteWall, ss));
+				}
+				if (red == 250 && green == 120 && blue == 120) {
+					handler.addObject(new DarkW(xx * 32, yy * 32, ID.DarkW, ss));
+				}
+				if (red == 0 && green == 0 && blue == 0) {
+					handler.addObject(new Wall2(xx * 32, yy * 32, ID.Wall2, ss));
+				}
+
 				
 			}
 		}

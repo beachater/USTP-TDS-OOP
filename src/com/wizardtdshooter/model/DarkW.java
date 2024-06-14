@@ -5,13 +5,13 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Ground2 extends GameObject {
+public class DarkW extends GameObject {
 
-	private BufferedImage ground2_image;
-	public Ground2(int x, int y, ID id, SpriteSheet ss) {
+	private BufferedImage darkW_image;
+	public DarkW(int x, int y, ID id, SpriteSheet ss) {
 		super(x, y, id, ss);
 		
-		// this.ground2_image = ss.grabImage(4, 2, 32, 32);
+		this.darkW_image = ss.grabImage(1, 3, 32, 32);
 	}
 
 	@Override
@@ -21,7 +21,7 @@ public class Ground2 extends GameObject {
 
 	@Override
 	public void render(Graphics g) {
-		g.drawImage(ground2_image, x, y, null);
+		g.drawImage(darkW_image, x, y, null);
 	}
 
 	@Override

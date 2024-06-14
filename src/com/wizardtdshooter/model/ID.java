@@ -16,5 +16,7 @@ public enum ID {
 	Dow(),
 	Roof(),
 	DarkR(),
-	DarkerR();
+	DarkerR(),
+	WhiteWall(),
+	DarkW();
 }
