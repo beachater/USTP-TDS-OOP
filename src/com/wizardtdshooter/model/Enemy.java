@@ -44,6 +44,55 @@ public class Enemy extends GameObject {
 				}
 
 			}
+			if (tempObject.getId() == ID.DarkerR) {
+				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
+					this.turnBack();
+					isMoving = false;
+				}
+
+			}
+			if (tempObject.getId() == ID.DarkR) {
+				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
+					this.turnBack();
+					isMoving = false;
+				}
+
+			}
+			if (tempObject.getId() == ID.Dow) {
+				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
+					this.turnBack();
+					isMoving = false;
+				}
+
+			}
+			if (tempObject.getId() == ID.Roof) {
+				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
+					this.turnBack();
+					isMoving = false;
+				}
+
+			}
+			if (tempObject.getId() == ID.Wall) {
+				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
+					this.turnBack();
+					isMoving = false;
+				}
+
+			}
+			if (tempObject.getId() == ID.Water) {
+				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
+					this.turnBack();
+					isMoving = false;
+				}
+
+			}
+			if (tempObject.getId() == ID.Wood) {
+				if (this.getBoundsBig().intersects(tempObject.getBounds())) {
+					this.turnBack();
+					isMoving = false;
+				}
+
+			}
 
 			if (tempObject.getId() == ID.Bullet) {
 				if (this.getBounds().intersects(tempObject.getBounds())) {

@@ -1,15 +1,13 @@
 package com.wizardtdshooter.model;
 
-import java.awt.Graphics;
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-
-import javax.swing.JOptionPane;
-
 import com.wizardtdshooter.controller.Handler;
 import com.wizardtdshooter.controller.SpriteSheet;
 import com.wizardtdshooter.view.Game;
 import com.wizardtdshooter.view.Window;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 
 public class Wizard extends GameObject {
 
@@ -49,6 +47,45 @@ public class Wizard extends GameObject {
 					this.y += this.velY * -1;
 				}
 			}
+			if (tempObject.getId() == ID.DarkerR) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
+			if (tempObject.getId() == ID.DarkR) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
+			if (tempObject.getId() == ID.Dow) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
+			if (tempObject.getId() == ID.Roof) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
+		
+			if (tempObject.getId() == ID.Water) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
+			if (tempObject.getId() == ID.Wood) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
+
+
 			if (tempObject.getId() == ID.Crate) {
 				if (this.getBounds().intersects(tempObject.getBounds())) {
 					Window.ammo += 30;

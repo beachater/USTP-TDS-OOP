@@ -31,6 +31,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -68,8 +69,14 @@ public class Game extends JPanel implements ActionListener {
 		this.start();
 	}	
 	public void loadNextLevel() {
-        if (currentLevel < levels.length - 1) {
+        if (currentLevel < levels.length) {
+			System.out.println("current level: " +  currentLevel + "levels: " + (levels.length - 1));
             currentLevel++;
+			if (currentLevel == levels.length)
+			{
+				JOptionPane.showMessageDialog(null, "Congragulations, you won!");
+				System.exit(0);
+			}
             loadLevel(levels[currentLevel]);
         }
     }	
@@ -112,6 +119,10 @@ public class Game extends JPanel implements ActionListener {
 			this.isRunning = false;
 			System.out.println("No enemies left, stopping game.");
 		}
+	}
+
+	public BufferedImage getLevelImage() {
+		return this.level;
 	}
 
 	public void paint(Graphics g) {
@@ -159,15 +170,6 @@ public class Game extends JPanel implements ActionListener {
 	
 		g.dispose();
 	}
-	// private void replaceEnemiesWithWall2() {
-	// 	for (int i = 0; i < handler.object.size(); i++) {
-	// 		GameObject obj = handler.object.get(i);
-	// 		if (obj.getId() == ID.Enemy) {
-	// 			handler.addObject(new Wall2(obj.getX(), obj.getY(), ID.Wall2, ss));
-	// 			i--;  // Adjust index after removal
-	// 		}
-	// 	}
-	// }
 
 	// Loading the level
 	private void loadLevel(String path) {
@@ -186,7 +188,7 @@ public class Game extends JPanel implements ActionListener {
 				int red = (pixel >> 16) & 0xff;
 				int green = (pixel >> 8) & 0xff;
 				int blue = (pixel) & 0xff;
-
+			
 				
 				if (red != 255 && green != 255 && blue == 255) {
 					handler.addObject(new Wizard(xx * 32, yy * 32, ID.Player, handler, ss));
