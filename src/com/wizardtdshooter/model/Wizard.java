@@ -59,6 +59,12 @@ public class Wizard extends GameObject {
 					this.y += this.velY * -1;
 				}
 			}
+			if (tempObject.getId() == ID.WhiteWall) {
+				if (this.getBounds().intersects(tempObject.getBounds())) {
+					this.x += this.velX * -1;
+					this.y += this.velY * -1;
+				}
+			}
 			if (tempObject.getId() == ID.Dow) {
 				if (this.getBounds().intersects(tempObject.getBounds())) {
 					this.x += this.velX * -1;

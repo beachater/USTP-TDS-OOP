@@ -205,7 +205,7 @@ public class Game extends JPanel implements ActionListener {
 				if (blue == 100 && green == 0 && red == 100) {
 					handler.addObject(new Door(xx * 32, yy * 32, ID.Door, ss));
 				}
-				if (red == 255 && green == 0 && blue == 255) {
+				if (red == 255 && green == 255 && blue == 0) {
 					handler.addObject(new Grass(xx * 32, yy * 32, ID.Grass, ss));
 				}
 				// if (red == 50 && green == 50 && blue == 50) {
@@ -221,7 +221,7 @@ public class Game extends JPanel implements ActionListener {
 				if (red == 255 && green == 100 && blue == 100) {
 					handler.addObject(new Wood(xx * 32, yy * 32, ID.Wood, ss));
 				}
-				if (red == 255 && green == 150 && blue == 250) {
+				if (red == 250 && green == 150 && blue == 250) {
 					handler.addObject(new Dow(xx * 32, yy * 32, ID.Dow, ss));
 				}
 				if (red == 0 && green == 150 && blue == 250) {

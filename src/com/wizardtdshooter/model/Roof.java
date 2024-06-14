@@ -12,7 +12,7 @@ public class Roof extends GameObject {
 	public Roof(int x, int y, ID id, SpriteSheet ss) {
 		super(x, y, id, ss);
 		
-		this.roof_image = ss.grabImage(5, 2, 32, 32);
+		this.roof_image = ss.grabImage(4, 3, 32, 32);
 	}
 
 	@Override
