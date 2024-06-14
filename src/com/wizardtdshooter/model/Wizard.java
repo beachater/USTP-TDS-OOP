@@ -16,6 +16,7 @@ public class Wizard extends GameObject {
 	private int speed = 3;
 	private int width = 32;
 	private int height = 48;
+	public static boolean canPasss = false;
 
 	public Wizard(int x, int y, ID id, Handler handler, SpriteSheet ss) {
 		super(x, y, id, ss);
@@ -38,6 +39,9 @@ public class Wizard extends GameObject {
 	}
 
 	private void collision() {
+
+		
+
 		for (int i = 0; i < handler.object.size(); i++) {
 			GameObject tempObject = handler.object.get(i);
 
@@ -105,8 +109,11 @@ public class Wizard extends GameObject {
 			}
 			if (tempObject.getId() == ID.Door) {
                 if (this.getBounds().intersects(tempObject.getBounds())) {
+					
+					if (canPasss == true){
+						((Game) handler.getGame()).loadNextLevel();
+					}
                     // Call the loadNextLevel method in the Game class
-                    ((Game) handler.getGame()).loadNextLevel();
                 }
             }
 		}
@@ -144,5 +151,9 @@ public class Wizard extends GameObject {
 	public Rectangle getBounds() {
 		return new Rectangle(x, y, width, height);
 	}
+
+    public static void setCanPasss(boolean gamecanPasss) {
+        canPasss = gamecanPasss;
+    }
 
 }

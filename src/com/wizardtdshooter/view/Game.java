@@ -48,7 +48,7 @@ public class Game extends JPanel implements ActionListener {
 	private Camera camera;
 	public static int currentLevel = 0;
 	private String[] levels = {"/bottom-left.png", "/top_left.png", "/top_right.png", "/bottom-right.png"};
-
+	
 
 	public Game() {
 		////////////////////////
@@ -60,6 +60,7 @@ public class Game extends JPanel implements ActionListener {
 		this.sprite_sheet = loader.loadImage("/wizard_images_2.png");
 		this.ss = new SpriteSheet(sprite_sheet);
 		this.floor = ss.grabImage(4, 2, 32, 32);
+
 		loadLevel(levels[currentLevel]);
 		/////////////////////////
 		this.setFocusable(true);
@@ -116,8 +117,9 @@ public class Game extends JPanel implements ActionListener {
 		}
 		handler.tick();
 		if (enemy <= 0) {
-			this.isRunning = false;
-			System.out.println("No enemies left, stopping game.");
+			Wizard.setCanPasss(true);
+		} else {
+			Wizard.setCanPasss(false);
 		}
 	}
 
